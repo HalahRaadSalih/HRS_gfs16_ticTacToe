@@ -16,46 +16,64 @@ var Board = function(players) {
 		[0, 0, 0],
 		[0, 0, 0],
 		[0, 0, 0]
-	]
+	];
+
+	var currntX;
+	var currntY;
 }
 
 // have a method someone can call on it to write
 Board.prototype.write = function(x, y, symbol) {
 
+	this.counter++;
 	this.gameBoard[x][y] = symbol;
-	// this.gameBoard.check(x,y,symbol);
+	this.checkNeighbor(x,y,symbol);
 };
 
-Board.prototype.checkForWin = function(prevX,prevY, x,y, symbol) {
-	// body...
+Board.prototype.checkForWin = function(x,y, symbol) {
 	// if symbotcount == 3, you win
-	if(this.gameBoard[prevX][prevY] === this.gameBoard[x][y]){
-		this.counter++;
+	if (x > -1 && y > -1 && x < this.gameBoard.length && y < this.gameBoard.length){
+			if(this.gameBoard[x][y] === symbol){
+				this.counter++;
+				console.log('current streak counter : ' + this.counter);
+				return true;
 	}
+			else{
 
-	return this.counter === 3 ? true : false;
+				return false;
+			}
+
+		return false;
+
+	}
+	
+
 
 };
 
 
-Board.prototype.check = function(x, y, symbol){
-	if(x >= 0 && y >= 0){
+Board.prototype.checkNeighbor = function(x, y, symbol){
 
-		if(x === this.gameBoard.length && y === this.gameBoard.length ){
-			//increase counter
-	 		return checkForWin();
-	 	}
+		//check first neibu 
+		 if (this.checkForWin(x,y+1, symbol) || this.checkForWin(x,y -1, symbol) || this.checkForWin(x ,y -2, symbol) || this.checkForWin(x - 1,y, symbol)){
+			// if neib is a match, check if we're outside of the board and check if it is ===3
+			// if (y < this.gameBoard.length && y > -1){
+				// check if you won or not
+				if(this.counter === 3){
 
-	 	else{
+					window.alert('you win, dude!');
 
-	 	  	return 	this.check(x, y + 1, symbol) && 
-	 	  			this.check(x, y - 1, symbol) && 
-	 	  			this.check(x + 1, y, symbol) && 
-	 	  			this.check(x - 1, y, symbol) && 
-	 	  			this.check(x + 1, y + 1, symbol) && 
-	 	  			this.check(x - 1 , y - 1, symbol);
-	 	}
-	}
+				}
+
+				else{
+					 // return this.checkNeighbor(x, y +2, symbol);
+					 console.log('check my other neighbor');
+				}
+		
+		}
+		else{
+			console.log('neighbor is not a match');
+		}
 	 
 }
 
@@ -79,12 +97,19 @@ var ySymbol = new Symbol('y');
 
 var board = new Board([halah, cairo]);
 console.log('intial state for board ');
+
 board.checkState();
 
 board.write(0,0,'x');
 
-console.log(' state for board after write');
 board.checkState();
+
+board.write(0,1,'x');
+board.checkState();
+
+board.write(0,2,'x')
+board.checkState();
+
 
 
 
