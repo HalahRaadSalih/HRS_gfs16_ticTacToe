@@ -6,6 +6,14 @@ var Symbol = function (shape){
 	this.shape = shape.toLowerCase();
 }
 
+var Square = function(location){
+	this.location = location;
+	this.checkedSquares = [];
+}
+
+var Turn = function(player, square){
+
+}
 // The board
 var Board = function(players) {
 
@@ -18,8 +26,17 @@ var Board = function(players) {
 		[0, 0, 0]
 	];
 
-	var currntX;
-	var currntY;
+	 this.winningCombinations = [
+	 [0,1,2],
+	 [3,4,5],
+	 [6,7,8],
+	 [0,3,6],
+	 [1,4,7],
+	 [2,5,8],
+	 [0,4,8],
+	 [2,4,6]
+	 ];
+
 }
 
 // have a method someone can call on it to write
@@ -54,26 +71,28 @@ Board.prototype.checkForWin = function(x,y, symbol) {
 
 Board.prototype.checkNeighbor = function(x, y, symbol){
 
-		//check first neibu 
-		 if (this.checkForWin(x,y+1, symbol) || this.checkForWin(x,y -1, symbol) || this.checkForWin(x ,y -2, symbol) || this.checkForWin(x - 1,y, symbol)){
-			// if neib is a match, check if we're outside of the board and check if it is ===3
-			// if (y < this.gameBoard.length && y > -1){
-				// check if you won or not
-				if(this.counter === 3){
+	// var up =  this.checkForWin(x - 1, y) || this.checkForWin(x)
+	// 	//check first neibu 
+	// 	 if (this.checkForWin(x,y+1, symbol) || this.checkForWin(x,y -1, symbol) || this.checkForWin(x ,y -2, symbol) || this.checkForWin(x - 1,y, symbol)){
+	// 		// if neib is a match, check if we're outside of the board and check if it is ===3
+	// 		// if (y < this.gameBoard.length && y > -1){
+	// 			// check if you won or not
+	// 			if(this.counter === 3){
 
-					window.alert('you win, dude!');
+	// 				window.alert('you win, dude!');
 
-				}
+	// 			}
 
-				else{
-					 // return this.checkNeighbor(x, y +2, symbol);
-					 console.log('check my other neighbor');
-				}
+	// 			else{
+	// 				 // return this.checkNeighbor(x, y +2, symbol);
+	// 				 console.log('check my other neighbor');
+	// 			}
 		
-		}
-		else{
-			console.log('neighbor is not a match');
-		}
+	// 	}
+	// 	else{
+	// 		console.log('neighbor is not a match');
+	// 	}
+
 	 
 }
 
